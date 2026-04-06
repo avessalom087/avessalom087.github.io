@@ -1,0 +1,48 @@
+name: Cache Buster
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'style.css'
+      - 'script.js'
+      - 'assets/js/portfolio-data.js'
+      - 'index.html'
+
+permissions:
+  contents: write
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Update assets version in index.html
+        run: |
+          # Use short commit hash as version
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          echo "Updating version to: $SHORT_SHA"
+          
+          # Replace ?v=... values with the current commit hash
+          # This handles both .css and .js files
+          sed -i "s/v=[A-Za-z0-9.-]*/v=$SHORT_SHA/g" index.html
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Only commit if there are changes
+          if git diff --quiet index.html; then
+            echo "No changes in index.html, skipping commit."
+          else
+            git add index.html
+            git commit -m "chore: update assets version to ${{ github.sha }} [skip ci]"
+            git push
+          fi

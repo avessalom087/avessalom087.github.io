@@ -1256,8 +1256,15 @@ body.menu-open .hamburger-menu span:nth-child(3) {
     .resume-list li strong { font-size: 16px; }
 }
 
-/* Touch Device Optimization */
-@media (hover: none) and (pointer: coarse) {
+/* Touch Device & Mobile Optimization */
+@media (hover: none) and (pointer: coarse), (max-width: 1024px) {
     #cursor, #cursor-glow { display: none !important; }
-    body { cursor: auto; }
+    body { cursor: auto !important; }
+    /* Reset custom cursor: none on interactive elements */
+    a, button, .portfolio-item, .hero-cta, .nav-links a, 
+    .portfolio-filter, .portfolio-subfilter, 
+    .lightbox-bg, .lightbox-thumb, .lightbox-close, .lightbox-nav {
+        cursor: auto !important;
+    }
 }
+

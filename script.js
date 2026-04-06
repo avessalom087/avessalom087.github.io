@@ -3,36 +3,46 @@
    =================================================== */
 
 // ── Cursor ─────────────────────────────────────────
-// Использует transform вместо left/top → GPU compositing, нет layout thrashing
 const cursor      = document.getElementById('cursor');
 const cursorGlow  = document.getElementById('cursor-glow');
 
-let mx = window.innerWidth / 2;
-let my = window.innerHeight / 2;
-let gx = mx, gy = my;
-let cursorScale = 1;
+// Check if device is likely mobile/touch
+const isMobile = window.matchMedia('(hover: none) and (pointer: coarse)').matches || window.innerWidth < 1024;
 
-document.addEventListener('mousemove', e => {
-    mx = e.clientX;
-    my = e.clientY;
-    cursor.style.transform = `translate(calc(${mx}px - 50%), calc(${my}px - 50%)) scale(${cursorScale})`;
-});
+if (cursor && cursorGlow && !isMobile) {
+    let mx = window.innerWidth / 2;
+    let my = window.innerHeight / 2;
+    let gx = mx, gy = my;
+    let cursorScale = 1;
 
-(function animateGlow() {
-    gx += (mx - gx) * 0.14;
-    gy += (my - gy) * 0.14;
-    cursorGlow.style.transform = `translate(calc(${gx}px - 50%), calc(${gy}px - 50%))`;
-    requestAnimationFrame(animateGlow);
-})();
+    document.addEventListener('mousemove', e => {
+        mx = e.clientX;
+        my = e.clientY;
+        cursor.style.transform = `translate(calc(${mx}px - 50%), calc(${my}px - 50%)) scale(${cursorScale})`;
+    });
 
-document.addEventListener('mousedown', () => {
-    cursorScale = 0.7;
-    cursor.style.transform = `translate(calc(${mx}px - 50%), calc(${my}px - 50%)) scale(0.7)`;
-});
-document.addEventListener('mouseup', () => {
-    cursorScale = 1;
-    cursor.style.transform = `translate(calc(${mx}px - 50%), calc(${my}px - 50%)) scale(1)`;
-});
+    (function animateGlow() {
+        gx += (mx - gx) * 0.14;
+        gy += (my - gy) * 0.14;
+        cursorGlow.style.transform = `translate(calc(${gx}px - 50%), calc(${gy}px - 50%))`;
+        requestAnimationFrame(animateGlow);
+    })();
+
+    document.addEventListener('mousedown', () => {
+        cursorScale = 0.7;
+        cursor.style.transform = `translate(calc(${mx}px - 50%), calc(${my}px - 50%)) scale(0.7)`;
+    });
+    
+    document.addEventListener('mouseup', () => {
+        cursorScale = 1;
+        cursor.style.transform = `translate(calc(${mx}px - 50%), calc(${my}px - 50%)) scale(1)`;
+    });
+} else {
+    // Ensure hidden if somehow the elements exist but we are on mobile
+    if (cursor) cursor.style.display = 'none';
+    if (cursorGlow) cursorGlow.style.display = 'none';
+}
+
 
 // ── Nav scroll & Mobile Menu ───────────────────────
 const nav = document.getElementById('site-nav');
