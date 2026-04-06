@@ -34,11 +34,29 @@ document.addEventListener('mouseup', () => {
     cursor.style.transform = `translate(calc(${mx}px - 50%), calc(${my}px - 50%)) scale(1)`;
 });
 
-// ── Nav scroll ─────────────────────────────────────
+// ── Nav scroll & Mobile Menu ───────────────────────
 const nav = document.getElementById('site-nav');
+const hamburger = document.getElementById('hamburger-menu');
+const navLinks = document.getElementById('nav-links');
+
 window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 60);
 }, { passive: true });
+
+if (hamburger) {
+    hamburger.addEventListener('click', () => {
+        document.body.classList.toggle('menu-open');
+    });
+}
+
+// Close menu when clicking a link
+if (navLinks) {
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.body.classList.remove('menu-open');
+        });
+    });
+}
 
 // ── Hero parallax (rAF throttled) ──────────────────
 // Без throttle: мог запускаться 100+ раз/сек при быстром скролле
@@ -46,6 +64,8 @@ const heroBgImg = document.getElementById('hero-bg-img');
 let parallaxTicking = false;
 
 window.addEventListener('scroll', () => {
+    if (window.innerWidth < 600) return; // Disable on small screens for performance
+    
     if (!parallaxTicking) {
         parallaxTicking = true;
         requestAnimationFrame(() => {
@@ -415,6 +435,31 @@ if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
 if (lightboxCloseBg) lightboxCloseBg.addEventListener('click', closeLightbox);
 if (lightboxPrev) lightboxPrev.addEventListener('click', (e) => { e.stopPropagation(); showImage(currentLightboxIndex - 1); });
 if (lightboxNext) lightboxNext.addEventListener('click', (e) => { e.stopPropagation(); showImage(currentLightboxIndex + 1); });
+
+// Touch Swiping for Lightbox
+let touchStartX = 0;
+let touchEndX = 0;
+
+lightbox.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+lightbox.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+}, { passive: true });
+
+function handleSwipe() {
+    const swipeThreshold = 50;
+    if (touchEndX < touchStartX - swipeThreshold) {
+        // Swipe Left -> Next Image
+        showImage(currentLightboxIndex + 1);
+    }
+    if (touchEndX > touchStartX + swipeThreshold) {
+        // Swipe Right -> Prev Image
+        showImage(currentLightboxIndex - 1);
+    }
+}
 
 document.addEventListener('keydown', e => {
     if (lightbox && !lightbox.classList.contains('hidden')) {
