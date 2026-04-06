@@ -114,7 +114,7 @@ function resizeFireflyCanvas() {
 resizeFireflyCanvas();
 window.addEventListener('resize', resizeFireflyCanvas, { passive: true });
 
-const FF_COUNT  = 40;
+const FF_COUNT  = isMobile ? 15 : 40;
 const fireflies = [];
 
 for (let i = 0; i < FF_COUNT; i++) {
@@ -170,8 +170,10 @@ function animateFireflies() {
 
         // Рендер через Canvas2D (shadowBlur = эквивалент box-shadow)
         ffCtx.save();
-        ffCtx.shadowBlur  = glow;
-        ffCtx.shadowColor = `rgba(209,247,188,${shadowAlpha})`;
+        if (!isMobile) {
+            ffCtx.shadowBlur  = glow;
+            ffCtx.shadowColor = `rgba(209,247,188,${shadowAlpha})`;
+        }
         ffCtx.globalAlpha = clampedOpacity;
         ffCtx.fillStyle   = '#e6faef';
         ffCtx.beginPath();
@@ -230,7 +232,8 @@ function initPortfolio() {
 
         let thumbSrc = item.src;
         if (thumbSrc.includes('cloudinary.com/')) {
-            thumbSrc = thumbSrc.replace('/upload/', '/upload/w_600,c_limit/');
+            const thumbWidth = isMobile ? 400 : 600;
+            thumbSrc = thumbSrc.replace('/upload/', `/upload/w_${thumbWidth},c_limit/`);
         }
 
         itemEl.innerHTML = `
@@ -377,7 +380,8 @@ function populateThumbnails() {
         const imgEl = document.createElement('img');
         let thumbSrc = item.dataset.src;
         if (thumbSrc.includes('cloudinary.com/')) {
-            thumbSrc = thumbSrc.replace('/upload/', '/upload/w_300,c_limit/');
+            const thumbWidth = isMobile ? 200 : 300;
+            thumbSrc = thumbSrc.replace('/upload/', `/upload/w_${thumbWidth},c_limit/`);
         }
         imgEl.src = thumbSrc;
         
