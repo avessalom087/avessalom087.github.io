@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest Artist | Портфолио 2D Художника</title>
+    <meta name="description" content="Портфолио 2D художника, специализирующегося на атмосферном концепт-арте, дизайне персонажей и цифровой иллюстрации.">
+
+    <!-- SEO & Social Media (Open Graph) -->
+    <meta property="og:title" content="Forest Artist | Портфолио 2D Художника">
+    <meta property="og:description" content="Атмосферный концепт-арт, дизайн персонажей и цифровая иллюстрация.">
+    <!-- Изображение будет подгружаться с GitHub Pages после публикации -->
+    <meta property="og:image" content="https://raw.githubusercontent.com/Aves/portfolio/main/assets/images/hero_bg.webp">
+    <meta property="og:url" content="https://Aves.github.io/portfolio/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Favicon (Стилизованная Ель) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 10 L85 45 L65 45 L95 85 L5 85 L35 45 L15 45 Z' fill='%23d7f5e3'/%3E%3Crect x='42' y='85' width='16' height='15' fill='%238a764d'/%3E%3C/svg%3E">
+
+    <!-- Fonts & CDNs -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.simpleicons.org">
+    <link rel="preconnect" href="https://res.cloudinary.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Marcellus&family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <!-- Preload hero image (критичный ресурс) -->
+    <link rel="preload" as="image" href="assets/images/hero_bg.webp" fetchpriority="high">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Canvas Texture Overlay -->
+    <div class="canvas-overlay"></div>
+
+    <!-- Custom Cursor -->
+    <div id="cursor"></div>
+    <div id="cursor-glow"></div>
+
+    <!-- Fireflies canvas (один elements вместо 40 DOM-нод) -->
+    <canvas id="firefly-canvas"></canvas>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="site-nav" id="site-nav">
+        <div class="nav-inner">
+            <a href="#hero" class="nav-logo">
+                <svg width="22" height="28" viewBox="0 0 22 28" fill="none">
+                    <path d="M11 2 L19 22 H14 L20 27 H2 L8 22 H3 Z" fill="currentColor" opacity="0.9"/>
+                </svg>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#hero">Главная</a></li>
+                <li><a href="#portfolio">Портфолио</a></li>
+                <li><a href="#about">Обо мне</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section id="hero">
+        <div class="hero-bg-wrap">
+            <img src="assets/images/hero_bg.webp" alt="" class="hero-bg-img" id="hero-bg-img" fetchpriority="high">
+            <div class="hero-bg-overlay"></div>
+        </div>
+
+        <div class="hero-content">
+            <h1 class="hero-title reveal">
+                <span class="hero-forest">Forest</span><br><em>Artist</em>
+            </h1>
+            <p class="hero-tagline reveal delay-1">Painting worlds in mist &amp; shadow</p>
+            <a href="#portfolio" class="hero-cta reveal delay-2">Мои работы</a>
+        </div>
+
+        <div class="scroll-indicator">
+            <span class="scroll-text">Листайте вниз</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="about-grid reveal">
+                <div class="about-card">
+                    <div class="about-portrait-wrap">
+                        <div class="portrait-ring">
+                            <img src="assets/images/portrait.png" alt="Artist Portrait" class="portrait-img">
+                        </div>
+                        <!-- Botanical wreath SVG -->
+                        <svg class="portrait-botanical" viewBox="0 0 200 200" fill="none">
+                            <path d="M100 10 Q130 30 140 60 Q150 90 130 110 Q110 130 100 190" stroke="rgba(200,230,220,0.5)" stroke-width="1" fill="none"/>
+                            <path d="M100 10 Q70 30 60 60 Q50 90 70 110 Q90 130 100 190" stroke="rgba(200,230,220,0.5)" stroke-width="1" fill="none"/>
+                            <ellipse cx="140" cy="75" rx="15" ry="7" transform="rotate(30 140 75)" stroke="rgba(200,230,220,0.4)" stroke-width="0.8" fill="none"/>
+                            <ellipse cx="60" cy="75" rx="15" ry="7" transform="rotate(-30 60 75)" stroke="rgba(200,230,220,0.4)" stroke-width="0.8" fill="none"/>
+                            <ellipse cx="130" cy="105" rx="12" ry="5" transform="rotate(45 130 105)" stroke="rgba(200,230,220,0.35)" stroke-width="0.8" fill="none"/>
+                            <ellipse cx="70" cy="105" rx="12" ry="5" transform="rotate(-45 70 105)" stroke="rgba(200,230,220,0.35)" stroke-width="0.8" fill="none"/>
+                        </svg>
+                    </div>
+                    <div class="about-text">
+                        <h2 class="section-heading reveal">О <em>художнике</em></h2>
+                        <p class="about-bio">
+                            Привет! Я 2D художник с большой любовью к атмосферным и таинственным мирам. Моя специализация — концепт-арт окружения и персонажей, где свет и тень рассказывают свою историю. Каждая работа — это погружение в другой мир.
+                        </p>
+                        <div class="about-stack">
+                            <p class="stack-label">Инструменты</p>
+                            <div class="stack-icons">
+                                <div class="stack-icon" data-tooltip="Adobe Photoshop"><img src="assets/svg/adobe-ps-svgrepo-com.svg" alt="PS"></div>
+                                <div class="stack-icon" data-tooltip="Adobe Illustrator"><img src="assets/svg/adobe-ai-svgrepo-com.svg" alt="AI"></div>
+                                <div class="stack-icon" data-tooltip="Adobe InDesign"><img src="assets/svg/adobe-id-svgrepo-com.svg" alt="ID"></div>
+                                <div class="stack-icon" data-tooltip="Blender"><img src="https://cdn.simpleicons.org/blender/d8d1a1" alt="BL"></div>
+                                <div class="stack-icon" data-tooltip="ZBrush"><img src="assets/svg/zbrush-svgrepo-com.svg" alt="ZB"></div>
+                                <div class="stack-icon" data-tooltip="Adobe After Effects"><img src="assets/svg/adobe-ae-svgrepo-com.svg" alt="AE"></div>
+                                <div class="stack-icon" data-tooltip="Figma"><img src="https://cdn.simpleicons.org/figma/d8d1a1" alt="FG"></div>
+                                <div class="stack-icon" data-tooltip="Unreal Engine"><img src="assets/svg/unreal-engine-svgrepo-com.svg" alt="UE"></div>
+                                <div class="stack-icon" data-tooltip="Procreate"><img src="assets/svg/procreatev2.svg" alt="PC"></div>
+                                <div class="stack-icon" data-tooltip="Adobe Substance Painter"><img src="assets/svg/substance-painter.svg" alt="SP"></div>
+                                <div class="stack-icon" data-tooltip="Adobe Premiere Pro"><img src="assets/svg/adobe-pr-svgrepo-com.svg" alt="PR"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- ===== RESUME ===== -->
+    <section id="resume" class="section section-dark">
+        <div class="container">
+            <h2 class="section-heading centered reveal">Опыт и <em>обучение</em></h2>
+            <div class="resume-cols reveal delay-1">
+                <div class="resume-col">
+                    <h3 class="resume-col-title">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M4 8h8M4 5h8M4 11h5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+                        Студии
+                    </h3>
+                    <ul class="resume-list">
+                        <li><strong>DreamScape Studio</strong><span>Lead 2D Artist · 2022 — н.в.</span></li>
+                        <li><strong>Mystic Games</strong><span>Concept Artist · 2020 — 2022</span></li>
+                    </ul>
+                </div>
+                <div class="resume-col">
+                    <h3 class="resume-col-title">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2"/><path d="M8 5v4l2.5 1.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+                        Проекты
+                    </h3>
+                    <ul class="resume-list">
+                        <li><strong>Project «Deepwood»</strong><span>Миропостроение и концепты</span></li>
+                        <li><strong>«Ancient Tides»</strong><span>Иллюстрации для артбука</span></li>
+                    </ul>
+                </div>
+                <div class="resume-col">
+                    <h3 class="resume-col-title">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12 L8 3 L14 12 Z" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linejoin="round"/><path d="M5 12v2h6v-2" stroke="currentColor" stroke-width="1" fill="none"/></svg>
+                        Образование
+                    </h3>
+                    <ul class="resume-list">
+                        <li><strong>Академия Искусств</strong><span>Цифровая живопись</span></li>
+                        <li><strong>Колледж Дизайна</strong><span>Графический дизайн</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PORTFOLIO ===== -->
+    <section id="portfolio" class="section">
+        <div class="container">
+            <h2 class="section-heading centered reveal"><em>Портфолио</em></h2>
+            
+            <div id="portfolio-filters" class="portfolio-filters reveal">
+                <!-- Main categories will be injected here -->
+            </div>
+
+            <div id="portfolio-subfilters" class="portfolio-subfilters reveal">
+                <!-- Sub-categories will be injected here if they exist -->
+            </div>
+
+            <div id="portfolio-grid" class="portfolio-grid reveal delay-1">
+                <!-- Items will be injected here by script.js -->
+            </div>
+
+            <div class="portfolio-cta-container reveal delay-2">
+                <button id="show-more" class="hero-cta" style="margin-bottom: 25px;">Показать еще</button>
+                <div class="portfolio-cta">
+                    <a href="#" class="hero-cta secondary">Все работы на ArtStation →</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact" class="section section-dark">
+        <div class="container">
+            <div class="contact-grid reveal">
+                <div class="contact-info">
+                    <h2 class="section-heading reveal"><em>Контакты</em></h2>
+                    <p class="contact-sub">Открыт для интересных проектов и коллабораций</p>
+                    <a href="mailto:smykova.ekaterina@gmail.com" class="contact-email">smykova.ekaterina@gmail.com</a>
+                    <div class="social-row">
+                        <a href="https://t.me/QuarterToForest" target="_blank" aria-label="Telegram" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                            Telegram
+                        </a>
+                        <a href="https://vk.com/quarter_to_forest" target="_blank" aria-label="VK" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M15.07 2H8.93C3.12 2 0 5.12 0 10.93v2.14C0 18.88 3.12 22 8.93 22h6.14C20.88 22 24 18.88 24 13.07v-2.14C24 5.12 20.88 2 15.07 2Zm3.47 13.88h-2.14c-.45 0-.61-.36-1.46-1.23-.86-.88-1.23-1.02-1.42-1.02-.26 0-.34.08-.34.5v.98c0 .48-.15.78-1.64.78-2.4 0-5.02-1.67-6.84-4.29-1.72-2.42-2.2-4.25-2.2-4.66 0-.21.08-.41.52-.41h2.14c.4 0 .54.2.71.61 1.05 2.92 2.5 4.97 3.08 4.97.25 0 .36-.11.36-.7V8.58c-.06-1.28-.76-1.39-.76-1.85 0-.23.18-.46.5-.46h3.18c.38 0 .51.19.51.59v3.29c0 .36.16.47.29.47.25 0 .51-.12 1.06-.66a14.7 14.7 0 0 0 1.95-3.37c.15-.32.42-.46.85-.46h2.14c.51 0 .62.26.51.61-.19.65-1.5 2.51-2.07 3.24-.46.58-.59.76 0 1.26.43.37 1.67 1.51 2 2.31.14.33-.06.78-.69.78Z"/>
+                            </svg>
+                            ВКонтакте
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-cta-col">
+                    <h2 class="section-heading reveal">Связаться со <em>Мной</em></h2>
+                    <form class="contact-form" id="contact-form">
+                        <input type="text" id="form-name" placeholder="Имя" class="form-input" required>
+                        <input type="email" id="form-email" placeholder="Email" class="form-input" required>
+                        <input type="text" id="form-contact-method" placeholder="Как с вами связаться? (Telegram, почта...)" class="form-input" required>
+                        <select id="form-type" class="form-input form-select" required>
+                            <option value="" disabled selected>Тип проекта</option>
+                            <option>Концепт-арт</option>
+                            <option>Дизайн персонажей</option>
+                            <option>Окружение</option>
+                            <option>Иллюстрация</option>
+                            <option>Другое</option>
+                        </select>
+                        <button type="submit" class="hero-cta">Отправить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <span>© 2026 ForestWalker Artist. Все права защищены.</span>
+            <span>Создано с любовью</span>
+        </div>
+    </footer>
+
+    <!-- ===== LIGHTBOX ===== -->
+    <div id="lightbox" class="lightbox hidden">
+        <div class="lightbox-bg" id="lightbox-close-bg"></div>
+        <div class="lightbox-wrapper">
+            <!-- Sidebar -->
+            <div class="lightbox-sidebar">
+                <h3 class="lightbox-sidebar-title">PROJECT</h3>
+                <div class="lightbox-thumbnails" id="lightbox-thumbnails">
+                    <!-- Заполняется JS -->
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lightbox-main">
+                <button class="lightbox-nav prev" id="lightbox-prev" aria-label="Предыдущее изображение">‹</button>
+                <button class="lightbox-nav next" id="lightbox-next" aria-label="Следующее изображение">›</button>
+                
+                <button class="lightbox-close" id="lightbox-close">✕</button>
+                <div class="lightbox-img-wrap" id="lightbox-img-wrap">
+                    <img src="" alt="" id="lightbox-img">
+                    
+                    <div class="lightbox-caption" id="lightbox-caption">
+                        <div class="lightbox-caption-logo">
+                            <span class="logo-icon-wrap">
+                                <svg width="22" height="28" viewBox="0 0 22 28" fill="none"><path d="M11 2 L19 22 H14 L20 27 H2 L8 22 H3 Z" fill="currentColor"/></svg>
+                            </span>
+                            <span class="logo-text">FOREST<br>WALKER</span>
+                        </div>
+                        <div class="lightbox-caption-text">
+                            <strong>Property of ForestWalker Art.</strong><br>
+                            Used with permission.<br>
+                            © 2026 ForestWalker Artist. All Rights Reserved.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/portfolio-data.js" defer></script>
+    <script src="script.js" defer></script>
+
+</body>
+</html>

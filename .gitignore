@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Local Heavy Assets
+PortfolioSet/
+assets/portfolio/PortfolioSet/
+*.psd
+*.psb
+*.zip
+
+# Temporary Scripts & Data
+temp_compressed/
+temp_to_compress/
+temp_to_restore/
+*.log
+cloudinary_mapping.json
+discovered_files.json
+portfolio_list.json
+restore_map.json
+translation_map.json
+verify_output*.txt
+simple_output.txt
+upload_batch.bat
+run_compression.ps1
+
+# Editor
+.vscode/
+.idea/
+.DS_Store
