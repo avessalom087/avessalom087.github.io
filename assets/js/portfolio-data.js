@@ -2,12 +2,13 @@ window.portfolioData = [
     {
         "title": "2Д - Characters",
         "category": "2d",
-        "src": "https://res.cloudinary.com/df8f1vyra/image/upload/f_auto,q_auto/v1775502281/avesweb_portfolio/2d/all/mountain_pass.webp",
-        "wide": true,
+        "src": "https://res.cloudinary.com/df8f1vyra/image/upload/v1777552162/lhy2gr1tioddnuh4vdfy.png",
+        "wide": false,
         "subcategory": "characters",
-        "cloudinaryId": "ForestWalker/mountain_pass",
-        "version": 1775498127
+        "cloudinaryId": "local/CMM_Tazaba",
+        "version": 1
     },
+
     {
         "title": "2Д - Characters",
         "category": "2d",
